@@ -1,0 +1,6 @@
+<div
+  class="icon"
+  [style.background-image]="getIcon()"
+  [style.transform]="'scale('+(hp === 0 ? 0.01 : 0.5+hp/200)+')'"
+  [style.opacity]="hp === 0 ? 0 : 1"
+></div>

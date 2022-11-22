@@ -1,0 +1,12 @@
+<div
+  class="pick"
+  [style.width.px]="width"
+  [style.height.px]="width"
+  [style.top.px]="getLength()-width"
+  [style.background-image]="'url('+(iconService.get('triangle', '#ffffff', '#ffffff00') | quote)+')'"
+></div>
+<div
+  class="body"
+  [style.width.px]="0.3*width"
+  [style.height.px]="heightBody"
+></div>

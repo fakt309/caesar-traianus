@@ -1,0 +1,5 @@
+<div class="close" (click)="onChoose.emit(-1)" ></div>
+<div *ngFor="let option of options" class="option" (click)="onChoose.emit(option.id)">
+  <div class="icon" [style.background-image]="'url('+option.icon+')'"></div>
+  <div class="text">{{ option.title }}</div>
+</div>

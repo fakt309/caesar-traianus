@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #00000033;
+  border-radius: 10px;
+  > .flag {
+    width: 20%;
+    height: 90%;
+  }
+  > .info {
+    flex: 1;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    > .name {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      > .text {
+        font-size: 18px;
+        color: #ffffff;
+        margin: 10px;
+        font-weight: bold;
+      }
+      > .icon {
+        width: 20px;
+        height: 20px;
+        margin: 10px;
+        margin-left: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border-radius: 5px;
+        flex-shrink: 0;
+        border: 2px solid #00000000;
+      }
+    }
+    > .mana {
+      height: 20px;
+      width: 100%;
+    }
+  }
+}

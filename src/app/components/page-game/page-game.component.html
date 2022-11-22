@@ -1,0 +1,197 @@
+
+<app-display
+  #displayRef
+  class="display"
+  [bot]="!playing.myTurn"
+  [width]="display.width"
+  [height]="display.height"
+  [grid]="display.grid"
+  [maniples]="display.maniples"
+  [interaction]="display.interaction"
+  [canAttack]="display.canAttack"
+  (onChange)="onChangeDisplay($event)"
+  (onAttack)="onAttackDisplay($event)"
+  (onInteraction)="onInteractionDisplay($event)"
+></app-display>
+
+<div
+  *ngIf="stage === 'deployment'"
+  class="ban-area"
+  [style.left.px]="banArea.x"
+  [style.top.px]="banArea.y"
+  [style.width.px]="banArea.width"
+  [style.height.px]="banArea.height"
+  [style.background-image]="'url('+(iconService.get('dashed', '#f4433699') | quote)+')'"
+>
+  <div
+    class="ready"
+    [class.ban]="maxManiple.infantry-getCountType('infantry') > 0 || maxManiple.archer-getCountType('archer') > 0 || maxManiple.mounted-getCountType('mounted') > 0"
+    (click)="imReady()"
+  >ready</div>
+</div>
+
+<div *ngIf="stage === 'deployment'" class="panel-add-maniple">
+  <div class="item">
+    <div class="title">
+      <div class="text">infantry</div>
+      <div class="x">x{{ maxManiple.infantry-getCountType('infantry') }}</div>
+    </div>
+    <div
+      class="wrap-maniple"
+      [class.ban]="maxManiple.infantry-getCountType('infantry') <= 0"
+      [style.width.px]="configService.infantry.formation*getCellWidth()"
+      [style.height.px]="math.ceil(configService.infantry.length/configService.infantry.formation)*getCellHeight()"
+    >
+      <app-maniple
+        class="maniple"
+        [attr.type]="'infantry'"
+        [width]="configService.infantry.formation*getCellWidth()"
+        [height]="math.ceil(configService.infantry.length/configService.infantry.formation)*getCellHeight()"
+        [color]="myColor"
+        [type]="'infantry'"
+        [hps]="getArray(configService.infantry.length, configService.infantry.hp)"
+        [formation]="configService.infantry.formation"
+        (pointerdown)="startPointer($event)"
+      ></app-maniple>
+    </div>
+  </div>
+  <div class="item">
+    <div class="title">
+      <div class="text">archers</div>
+      <div class="x">x{{ maxManiple.archer-getCountType('archer') }}</div>
+    </div>
+    <div
+      class="wrap-maniple"
+      [class.ban]="maxManiple.archer-getCountType('archer') === 0"
+      [style.width.px]="configService.archer.formation*getCellWidth()"
+      [style.height.px]="math.ceil(configService.archer.length/configService.archer.formation)*getCellHeight()"
+    >
+      <app-maniple
+        class="maniple"
+        [attr.type]="'archer'"
+        [width]="configService.archer.formation*getCellWidth()"
+        [height]="math.ceil(configService.archer.length/configService.archer.formation)*getCellHeight()"
+        [color]="myColor"
+        [type]="'archer'"
+        [hps]="getArray(configService.archer.length, configService.archer.hp)"
+        [formation]="configService.archer.formation"
+        (pointerdown)="startPointer($event)"
+      ></app-maniple>
+    </div>
+  </div>
+  <div class="item">
+    <div class="title">
+      <div class="text">mounted</div>
+      <div class="x">x{{ maxManiple.mounted-getCountType('mounted') }}</div>
+    </div>
+    <div
+      class="wrap-maniple"
+      [class.ban]="maxManiple.mounted-getCountType('mounted') === 0"
+      [style.width.px]="configService.mounted.formation*getCellWidth()"
+      [style.height.px]="math.ceil(configService.mounted.length/configService.mounted.formation)*getCellHeight()"
+    >
+      <app-maniple
+        class="maniple"
+        [attr.type]="'mounted'"
+        [width]="configService.mounted.formation*getCellWidth()"
+        [height]="math.ceil(configService.mounted.length/configService.mounted.formation)*getCellHeight()"
+        [color]="myColor"
+        [type]="'mounted'"
+        [hps]="getArray(configService.mounted.length, configService.mounted.hp)"
+        [formation]="configService.mounted.formation"
+        (pointerdown)="startPointer($event)"
+      ></app-maniple>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="stage === 'deployment'" class="maniples">
+  <app-maniple
+    *ngFor="let maniple of deployment; trackManiple"
+    class="maniple"
+    [attr.idmaniple]="maniple.id"
+    [class.ban]="maniple.ban"
+    [style.left.px]="maniple.x"
+    [style.top.px]="maniple.y"
+    [width]="maniple.formation*getCellWidth()"
+    [height]="math.ceil(maniple.hps.length/maniple.formation)*getCellHeight()"
+    [color]="myColor"
+    [type]="maniple.type"
+    [formation]="maniple.formation"
+    [hps]="maniple.hps"
+    (pointerdown)="startPointer($event)"
+  ></app-maniple>
+</div>
+
+<app-info-card
+  *ngIf="stage === 'battle'"
+  class="info-card_me"
+  [image]="'assets/spqr.png'"
+  [color]="'#bc2e2e'"
+  [name]="'Rome'"
+  [mana]="{ value: playing.me.stamina, potential: playing.me.potentialStamina }"
+  [interaction]="playing.myTurn ? display.interaction : 'none'"
+  (click)="menu.show = true"
+></app-info-card>
+
+<app-info-card
+  *ngIf="stage === 'battle'"
+  class="info-card_enemy"
+  [image]="'assets/carthage.png'"
+  [color]="'#3f51b5'"
+  [name]="'Carthage'"
+  [mana]="{ value: playing.enemy.stamina, potential: playing.enemy.potentialStamina }"
+  [interaction]="!playing.myTurn ? display.interaction : 'none'"
+></app-info-card>
+
+<app-menu
+  *ngIf="menu.show"
+  class="menu"
+  [options]="[{ id: 1, title: 'move', icon: 'assets/move.svg' }, { id: 2, title: 'attack', icon: 'assets/sword.svg' }, { id: 3, title: 'rotate', icon: 'assets/rotate.svg' }, { id: 4, title: 'pass', icon: 'assets/skip.svg' }]"
+  (onChoose)="onChooseMenu($event)"
+></app-menu>
+
+<div *ngIf="!isTouch" class="hint_menu-desktop">
+  <div class="option">
+    <div class="icon icon_digit1"></div>
+    <div class="text">move</div>
+  </div>
+  <div class="option">
+    <div class="icon icon_digit2"></div>
+    <div class="text">rotate</div>
+  </div>
+  <div class="option">
+    <div class="icon icon_digit3"></div>
+    <div class="text">attack</div>
+  </div>
+  <div class="option">
+    <div class="icon icon_shift"></div>
+    <div class="text text_middle">+</div>
+    <div class="icon icon_space"></div>
+    <div class="text">pass</div>
+  </div>
+</div>
+
+<div *ngIf="isTouch" class="hint_menu">
+  <div class="icon"></div>
+  <div class="text">double tap</div>
+</div>
+
+<div *ngIf="winner.show" class="winner">
+  <div class="title">winner</div>
+  <div class="main">
+    <app-flag
+      class="flag"
+      [image]="winner.name === 'Rome' ? 'assets/spqr.png' : 'assets/carthage.png'"
+      [color]="winner.name === 'Rome' ? '#bc2e2e' : '#3f51b5'"
+    ></app-flag>
+    <div
+      class="text"
+      [style.color]="winner.name === 'Rome' ? '#bc2e2e' : '#3f51b5'"
+    >{{ winner.name }}</div>
+  </div>
+  <div class="buttons">
+    <a class="button" (click)="reloadPage()">play again</a>
+    <a class="button" routerLink="/" >exit game</a>
+  </div>
+</div>

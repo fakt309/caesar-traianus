@@ -1,0 +1,37 @@
+
+
+<ng-container *ngIf="type === 'melee'">
+  <ng-container *ngFor="let item of [].constructor(grid.h); let i = index">
+    <div
+      *ngFor="let item of [].constructor(grid.w); let j = index"
+      class="square"
+      [style.left.px]="x1+j*width/grid.w+margin*width"
+      [style.top.px]="y1+i*height/grid.h+margin*height"
+      [style.width.px]="width/grid.w-2*margin*width"
+      [style.height.px]="height/grid.h-2*margin*height"
+    ></div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="type === 'range'">
+  <ng-container *ngIf="mode === 'horizontal'">
+    <div
+      class="line"
+      *ngFor="let item of [].constructor(grid.w); let i = index"
+      [style.left.px]="x1+(i+1)*width/grid.w-(width/grid.w)/2"
+      [style.top.px]="y1"
+      [style.height.px]="height"
+      [style.transform]="'rotate('+rotate+'rad)'"
+    ></div>
+  </ng-container>
+  <ng-container *ngIf="mode === 'vertical'">
+    <div
+      class="line"
+      *ngFor="let item of [].constructor(grid.w); let i = index"
+      [style.left.px]="x1"
+      [style.top.px]="y1+(i+1)*width/grid.w-(width/grid.w)/2"
+      [style.height.px]="height"
+      [style.transform]="'rotate('+rotate+'rad)'"
+    ></div>
+  </ng-container>
+</ng-container>

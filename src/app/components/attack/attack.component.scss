@@ -1,0 +1,15 @@
+:host {
+  position: absolute;
+  > .square {
+    position: absolute;
+    background-color: #ff000099;
+    border-radius: 100%;
+  }
+  > .line {
+    position: absolute;
+    width: 2px;
+    background-color: #ff000099;
+    height: 100%;
+    transform-origin: center top;
+  }
+}

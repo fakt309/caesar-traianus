@@ -1,0 +1,83 @@
+<div class="grid">
+  <div
+    *ngFor="let line of [].constructor(grid.h-1); let i = index"
+    class="line line_horizontal"
+    [style.top]="((i+1)*getCellHeight())+'px'"
+  ></div>
+  <div
+    *ngFor="let line of [].constructor(grid.w-1); let j = index"
+    class="line line_vertical"
+    [style.left]="((j+1)*getCellWidth())+'px'"
+  ></div>
+</div>
+
+<app-maniple
+  *ngIf="ghost.active"
+  class="maniple ghost"
+  [class.ban]="ghost.ban"
+  [style.display]="ghost.show ? 'flex' : 'none'"
+  [style.left]="getManipleCoordX(ghost)+'px'"
+  [style.top]="getManipleCoordY(ghost)+'px'"
+  [style.transform]="'rotate('+getManipleRotation(ghost)+'deg)'"
+  [width]="getManipleWidth(ghost)"
+  [height]="getManipleHeight(ghost)"
+  [color]="ghost.color"
+  [type]="ghost.type"
+  [formation]="ghost.formation"
+  [hps]="ghost.hps"
+></app-maniple>
+
+<app-maniple
+  *ngFor="let maniple of maniples; trackBy: trackManiple"
+  class="maniple"
+  [attr.idmaniple]="maniple.id"
+  [style.left]="getManipleCoordX(maniple)+'px'"
+  [style.top]="getManipleCoordY(maniple)+'px'"
+  [style.transform]="'rotate('+getManipleRotation(maniple)+'deg)'"
+  [width]="getManipleWidth(maniple)"
+  [height]="getManipleHeight(maniple)"
+  [color]="maniple.color"
+  [type]="maniple.type"
+  [formation]="maniple.formation"
+  [hps]="maniple.hps"
+  (pointerdown)="startPointer($event)"
+></app-maniple>
+
+<app-arrow
+  *ngIf="arrow.active"
+  [x1]="arrow.start[0]"
+  [y1]="arrow.start[1]"
+  [x2]="arrow.end[0]"
+  [y2]="arrow.end[1]"
+  [width]="getCellWidth()"
+></app-arrow>
+
+<app-attack
+  *ngIf="attack.active"
+  [type]="attack.type"
+  [mode]="attack.mode"
+  [x1]="attack.x1"
+  [y1]="attack.y1"
+  [x2]="attack.x2"
+  [y2]="attack.y2"
+  [width]="attack.width"
+  [height]="attack.height"
+  [grid]="attack.grid"
+></app-attack>
+
+<app-boom
+  *ngFor="let boom of explosions; trackBy: trackBoom"
+  [style.left.px]="boom.x*getCellWidth()"
+  [style.top.px]="boom.y*getCellHeight()"
+  [style.width.px]="getCellWidth()"
+  [style.height.px]="getCellHeight()"
+></app-boom>
+
+<app-bow-arrow
+  *ngFor="let arrow of bowArrows; trackBy: trackBowArrow"
+  [style.left.px]="arrow.x-(0.5*getCellWidth())/2"
+  [style.top.px]="arrow.y-(getCellHeight())/2"
+  [style.width.px]="0.5*getCellWidth()"
+  [style.height.px]="getCellHeight()"
+  [style.transform]="'rotate('+arrow.rotate+'rad)'"
+></app-bow-arrow>

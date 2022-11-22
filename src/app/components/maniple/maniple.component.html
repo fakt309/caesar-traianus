@@ -1,0 +1,13 @@
+<app-centuria
+  *ngFor="let hp of hps; let i = index; trackBy: trackCenturia"
+  class="centuria"
+  [style.left]="getCoordX(i)+'px'"
+  [style.top]="getCoordY(i)+'px'"
+  [width]="getWidthCenturia()"
+  [height]="getHeightCenturia()"
+  [type]="type"
+  [color]="color"
+  [hp]="hp"
+></app-centuria>
+
+<div class="arrow" [style.background-image]="'url('+(iconService.get('triangle', '#ffffff') | quote)+')'"></div>

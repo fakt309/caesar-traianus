@@ -1,0 +1,92 @@
+:host {
+  position: absolute;
+  left: 0px;
+  height: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #607d8b;
+  overflow: hidden;
+  > .content {
+    max-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+    > .title {
+      margin: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fafafa;
+      text-align: center;
+    }
+    > .description {
+      margin: 20px;
+      font-size: 14px;
+      color: #fafafa;
+      text-align: center;
+    }
+    > .button {
+      margin: 20px;
+      padding: 10px 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      color: #ffffff;
+      font-weight: bold;
+      text-decoration: none;
+      transform: translateY(0px);
+      box-shadow: 0px 0px 5px #00000000;
+      transition: all ease 0.2s;
+    }
+    > .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 0px 5px #00000099;
+    }
+    > .footer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 100px;
+      > .link {
+        margin: 10px;
+        padding: 10px;
+        max-width: 150px;
+        text-align: center;
+        border-radius: 10px;
+        color: #ffeb3b;
+        font-size: 14px;
+        text-decoration: none;
+        transform: translateY(0px);
+        box-shadow: 0px 0px 5px #00000000;
+        transition: all ease 0.2s;
+      }
+      > .link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 0px 5px #00000099;
+      }
+    }
+  }
+  > .trajan {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 100%;
+    top: 0px;
+    transform: translateX(-50%);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('/assets/trajan.png');
+    opacity: 0.3;
+    z-index: 1;
+  }
+}

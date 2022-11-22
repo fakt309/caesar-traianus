@@ -1,0 +1,5 @@
+<div class="bar" [class.alert]="potential > value">
+  <div class="value" [style.width]="(potential <= value ? ((value-potential)/max)*100 : 0)+'%'"></div>
+  <div class="pre-back" [style.width]="(potential <= value ? (potential/max)*100 : 0)+'%'"></div>
+</div>
+<div class="text">{{ value }}<span *ngIf="potential" class="potential" [class.alert]="potential > value">-{{ potential }}</span> / {{ max }}</div>

@@ -1,0 +1,8 @@
+<app-flag class="flag" [image]="image" [color]="color"></app-flag>
+<div class="info">
+  <div class="name">
+    <div class="text">{{ name }}</div>
+    <div *ngIf="interaction !== 'none'" class="icon" [style.background-image]="'url('+getIcon()+')'"></div>
+  </div>
+  <app-mana class="mana" [value]="mana.value" [potential]="mana.potential" [max]="configService.fullStamina"></app-mana>
+</div>
